@@ -1,12 +1,16 @@
 package org.victor.tankcontroller;
 
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class MainActivity extends ActionBarActivity {
+
+    private static final int RESULT_SETTINGS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +35,16 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            showSettings();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showSettings() {
+        Log.d("SETTINGS", "show");
+        Intent i = new Intent(this, SettingsActivity.class);
+        startActivityForResult(i, RESULT_SETTINGS);
     }
 }
