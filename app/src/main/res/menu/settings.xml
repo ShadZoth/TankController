@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference android:defaultValue="192.168.150.1" android:inputType="numberDecimal"
+        android:key="ip" android:maxLines="1" android:selectAllOnFocus="true"
+        android:singleLine="true" android:summary="@string/ip_summary"
+        android:title="@string/ip_title" />
+
+    <EditTextPreference android:defaultValue="8888" android:inputType="number" android:key="port"
+        android:maxLines="1" android:selectAllOnFocus="true" android:singleLine="true"
+        android:summary="@string/port_summary" android:title="@string/port_title" />
+
+</PreferenceScreen>
