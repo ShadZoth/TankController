@@ -5,4 +5,12 @@
     <header
         android:fragment="org.victor.tankcontroller.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_general" />
+
+    <header
+        android:fragment="org.victor.tankcontroller.SettingsActivity$NotificationPreferenceFragment"
+        android:title="@string/pref_header_general" />
+
+    <header
+        android:fragment="org.victor.tankcontroller.SettingsActivity$DataSyncPreferenceFragment"
+        android:title="@string/pref_header_general" />
 </preference-headers>

@@ -71,8 +71,8 @@ public class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
         addPreferencesFromResource(R.menu.settings);
-        setListener("ip", new IpChangeListener());
-        setListener("port", new PortChangeListener());
+        setup("ip", "192.168.150.1", new IpChangeListener());
+        setup("port", "8888", new PortChangeListener());
     }
 
     @Override
@@ -99,9 +99,13 @@ public class SettingsActivity extends PreferenceActivity {
         return false;
     }
 
-    private void setListener(String key, Preference.OnPreferenceChangeListener listener) {
-        EditTextPreference ipPreference = (EditTextPreference) findPreference(key);
-        ipPreference.setOnPreferenceChangeListener(listener);
+    private void setup(String key,
+                       String defaultValue,
+                       Preference.OnPreferenceChangeListener listener) {
+        EditTextPreference preference = (EditTextPreference) findPreference(key);
+        preference.setDefaultValue(defaultValue);
+        preference.setSummary(defaultValue);
+        preference.setOnPreferenceChangeListener(listener);
     }
 
     /**
@@ -119,6 +123,13 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     // INNER CLASSES
+
+    private boolean updateSummaryIfValid(Preference preference, Object newValue, boolean valid) {
+        if (valid) {
+            preference.setSummary(newValue.toString());
+        }
+        return valid;
+    }
 
     /**
      * This fragment shows general preferences only. It is used when the
@@ -140,17 +151,55 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
+    /**
+     * This fragment shows notification preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class NotificationPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            //addPreferencesFromResource(R.xml.pref_notification);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+        }
+    }
+
+    /**
+     * This fragment shows data and sync preferences only. It is used when the
+     * activity is showing a two-pane settings UI.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class DataSyncPreferenceFragment extends PreferenceFragment {
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            // addPreferencesFromResource(R.xml.pref_data_sync);
+
+            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+            // to their values. When their values change, their summaries are
+            // updated to reflect the new value, per the Android Design
+            // guidelines.
+            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+        }
+    }
+
     private class IpChangeListener implements Preference.OnPreferenceChangeListener {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            return Utils.isValidIp(newValue);
+            return updateSummaryIfValid(preference, newValue, Utils.isValidIp(newValue));
         }
     }
 
     private class PortChangeListener implements Preference.OnPreferenceChangeListener {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            return Utils.isValidPort(newValue);
+            return updateSummaryIfValid(preference, newValue, Utils.isValidPort(newValue));
         }
     }
 }
