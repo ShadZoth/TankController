@@ -9,26 +9,35 @@
 
     <ImageButton
         android:id="@+id/left_button"
+        style="@style/AppTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_keyboard_arrow_left_black_48dp" />
+        android:background="@drawable/circle"
+        android:elevation="10dp"
+        android:src="@drawable/ic_keyboard_arrow_left_black_48dp" />
 
     <ImageButton
         android:id="@+id/up_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_keyboard_arrow_up_black_48dp" />
+        android:background="@drawable/circle"
+        android:elevation="10dp"
+        android:src="@drawable/ic_keyboard_arrow_up_black_48dp" />
 
     <ImageButton
         android:id="@+id/down_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_keyboard_arrow_down_black_48dp" />
+        android:background="@drawable/circle"
+        android:elevation="10dp"
+        android:src="@drawable/ic_keyboard_arrow_down_black_48dp" />
 
     <ImageButton
         android:id="@+id/right_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_keyboard_arrow_right_black_48dp" />
+        android:background="@drawable/circle"
+        android:elevation="10dp"
+        android:src="@drawable/ic_keyboard_arrow_right_black_48dp" />
 
 </LinearLayout>

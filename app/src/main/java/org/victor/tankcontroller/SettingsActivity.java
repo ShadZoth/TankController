@@ -122,14 +122,14 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
-    // INNER CLASSES
-
     private boolean updateSummaryIfValid(Preference preference, Object newValue, boolean valid) {
         if (valid) {
             preference.setSummary(newValue.toString());
         }
         return valid;
     }
+
+    // Inner classes
 
     /**
      * This fragment shows general preferences only. It is used when the
