@@ -122,11 +122,12 @@ public class SettingsActivity extends PreferenceActivity {
         }
     }
 
-    private boolean updateSummaryIfValid(Preference preference, Object newValue, boolean valid) {
-        if (valid) {
+    private boolean updateSummaryIfValid(Preference preference, Object newValue, Validator validator) {
+        if (validator.isValid(newValue)) {
             preference.setSummary(newValue.toString());
+            return true;
         }
-        return valid;
+        return false;
     }
 
     // Inner classes
@@ -192,14 +193,26 @@ public class SettingsActivity extends PreferenceActivity {
     private class IpChangeListener implements Preference.OnPreferenceChangeListener {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            return updateSummaryIfValid(preference, newValue, Utils.isValidIp(newValue));
+            return updateSummaryIfValid(preference, newValue, new Validator() {
+                @Override
+                public boolean isValid(Object o) {
+                    //TODO: implement
+                    return true;
+                }
+            });
         }
     }
 
     private class PortChangeListener implements Preference.OnPreferenceChangeListener {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            return updateSummaryIfValid(preference, newValue, Utils.isValidPort(newValue));
+            return updateSummaryIfValid(preference, newValue, new Validator() {
+                @Override
+                public boolean isValid(Object o) {
+                    //TODO: implenent
+                    return false;
+                }
+            });
         }
     }
 }
