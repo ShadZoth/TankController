@@ -103,9 +103,15 @@ public class SettingsActivity extends PreferenceActivity {
                        String defaultValue,
                        Preference.OnPreferenceChangeListener listener) {
         EditTextPreference preference = (EditTextPreference) findPreference(key);
-        preference.setDefaultValue(defaultValue);
-        preference.setSummary(defaultValue);
+        if (isBlank(preference.getText())) {
+            preference.setText(defaultValue);
+        }
+        preference.setSummary(preference.getText());
         preference.setOnPreferenceChangeListener(listener);
+    }
+
+    private boolean isBlank(String text) {
+        return text == null || text.trim().equals("");
     }
 
     /**
@@ -209,7 +215,7 @@ public class SettingsActivity extends PreferenceActivity {
             return updateSummaryIfValid(preference, newValue, new Validator() {
                 @Override
                 public boolean isValid(Object o) {
-                    //TODO: implenent
+                    //TODO: implement
                     return false;
                 }
             });
