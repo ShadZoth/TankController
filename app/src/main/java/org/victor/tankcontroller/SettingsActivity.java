@@ -16,6 +16,9 @@ import android.view.MenuItem;
 @SuppressWarnings("deprecation")
 public class SettingsActivity extends PreferenceActivity {
 
+    public static final String DEFAULT_IP = "192.168.150.1";
+    public static final String DEFAULT_PORT = "8888";
+
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener
             = new Preference.OnPreferenceChangeListener() {
         @Override
@@ -71,8 +74,8 @@ public class SettingsActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         setupActionBar();
         addPreferencesFromResource(R.menu.settings);
-        setup("ip", "192.168.150.1", new IpChangeListener());
-        setup("port", "8888", new PortChangeListener());
+        setup("ip", DEFAULT_IP, new IpChangeListener());
+        setup("port", DEFAULT_PORT, new PortChangeListener());
     }
 
     @Override
