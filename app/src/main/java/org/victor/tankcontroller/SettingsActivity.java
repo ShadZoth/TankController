@@ -197,12 +197,33 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private class IpChangeListener implements Preference.OnPreferenceChangeListener {
+
+        public static final int IP_LENGTH = 4;
+        public static final int MAX_VALUE_OF_IP_PART = 255;
+
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             return updateSummaryIfValid(preference, newValue, new Validator() {
                 @Override
                 public boolean isValid(Object o) {
-                    //TODO: implement
+                    if (!(o instanceof String)) {
+                        return false;
+                    }
+                    String s = (String) o;
+                    String[] parts = s.split("\\.");
+                    if (parts.length != IP_LENGTH) {
+                        return false;
+                    }
+                    for (String part : parts) {
+                        try {
+                            int iPart = Integer.parseInt(part);
+                            if (iPart < 0 || iPart > MAX_VALUE_OF_IP_PART) {
+                                return false;
+                            }
+                        } catch (NumberFormatException e) {
+                            return false;
+                        }
+                    }
                     return true;
                 }
             });
@@ -210,13 +231,25 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     private class PortChangeListener implements Preference.OnPreferenceChangeListener {
+
+        public static final int MIN_PORT = 1;
+        public static final int MAX_PORT = 65535;
+
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
             return updateSummaryIfValid(preference, newValue, new Validator() {
                 @Override
                 public boolean isValid(Object o) {
-                    //TODO: implement
-                    return false;
+                    if (!(o instanceof String)) {
+                        return false;
+                    }
+                    String s = (String) o;
+                    try {
+                        int i = Integer.parseInt(s);
+                        return i >= MIN_PORT && i <= MAX_PORT;
+                    } catch (NumberFormatException e) {
+                        return false;
+                    }
                 }
             });
         }
